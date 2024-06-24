@@ -1,4 +1,3 @@
-#!/usr/bin/env groovy
 pipeline {
     agent any
     
@@ -6,9 +5,11 @@ pipeline {
         stage('Run Project 1 Pipeline') {
             steps {
                 dir('emman-stuff/project-1') {
+                    echo "Running Project 1 pipeline"
+                    // Load and execute the Jenkinsfile in project-1 folder
                     script {
-                        echo "Running Project 1 pipeline"
-                        sh 'sh ./Jenkinsfile'
+                        def project1Pipeline = load('Jenkinsfile')
+                        project1Pipeline.execute()
                     }
                 }
             }
@@ -17,9 +18,11 @@ pipeline {
         stage('Run Project 2 Pipeline') {
             steps {
                 dir('emman-stuff/project-2') {
+                    echo "Running Project 2 pipeline"
+                    // Load and execute the Jenkinsfile in project-2 folder
                     script {
-                        echo "Running Project 2 pipeline"
-                        sh 'sh ./Jenkinsfile'
+                        def project2Pipeline = load('Jenkinsfile')
+                        project2Pipeline.execute()
                     }
                 }
             }
