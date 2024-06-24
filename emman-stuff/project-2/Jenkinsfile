@@ -1,4 +1,4 @@
-@Library('venti-lib')_
+// @Library('venti-lib')_
 import jenkins.model.*
 
 pipeline {
