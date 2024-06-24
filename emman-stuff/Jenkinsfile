@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Run Project 1 Pipeline') {
+            steps {
+                dir('emman-stuff/project-1') {
+                    script {
+                        echo "Running Project 1 pipeline"
+                        sh 'sh ./Jenkinsfile'
+                    }
+                }
+            }
+        }
+        
+        stage('Run Project 2 Pipeline') {
+            steps {
+                dir('emman-stuff/project-2') {
+                    script {
+                        echo "Running Project 2 pipeline"
+                        sh 'sh ./Jenkinsfile'
+                    }
+                }
+            }
+        }
+    }
+}
