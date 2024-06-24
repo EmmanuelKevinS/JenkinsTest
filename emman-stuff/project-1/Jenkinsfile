@@ -4,7 +4,6 @@ import jenkins.model.*
 pipeline {
     agent {
         kubernetes {
-            // yamlFile 'agent/swag.yaml'
             yamlFile 'emman-stuff/project-1/agent/swag.yaml'
         }
     }
