@@ -1,0 +1,51 @@
+@Library('venti-lib')_
+import jenkins.model.*
+
+pipeline {
+    agent {
+        kubernetes {
+            yamlFile 'emman-stuff/project-1/agent/swag.yaml'
+        }
+    }
+
+    parameters {
+        string(name: 'Rows1', defaultValue: '10', description: 'Number of rows (1)')
+        string(name: 'Columns1', defaultValue: '5', description: 'Number of columns (1)')
+        string(name: 'Rows2', defaultValue: '30', description: 'Number of rows (2)')
+        string(name: 'Columns2', defaultValue: '10', description: 'Number of columns (2)')
+        string(name: 'Rows3', defaultValue: '3', description: 'Number of rows (3)')
+        string(name: 'Columns3', defaultValue: '2', description: 'Number of columns (3)')
+    }
+    stages {
+        stage('Print Grid') {
+            steps {
+                container('griddy') {
+                    script {
+                        for(i = 1; i <= 3; i++){
+                            sh "echo \"${params["Rows${i}"]}\\n ${params["Columns${i}"]} \" | /myApp/my-program"
+                        }
+                    }
+                }
+            }
+        }
+        
+       stage('Check Parameters') {
+            steps {
+                script {
+                    for (i = 1; i <= 3; i++){
+                        def rows = params["Rows${i}"].toInteger()
+                        def columns = params["Columns${i}"].toInteger()
+
+                        if(rows < 8 && columns < 5) {
+                            echo "Scenario ${i}: Too small, no one cares"
+                        } 
+                        else{
+                            echo "Scenario ${i}: You have ${rows} rows and ${columns} columns"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

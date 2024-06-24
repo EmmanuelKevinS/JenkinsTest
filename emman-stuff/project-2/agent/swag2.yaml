@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    usage: jenkins-agent
+spec:
+  imagePullSecrets:
+    - name: regcred
+  containers:
+    - name: lebron
+      image: harbor.data.ventitechnologies.net/venti/emman-v3:latest
+      tty: true
+  nodeSelector:
+    provider: openstack

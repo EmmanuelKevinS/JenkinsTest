@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    usage: jenkins-agent
+spec:
+  imagePullSecrets:
+    - name: regcred
+  containers:
+    - name: griddy
+      image: harbor.data.ventitechnologies.net/venti/emman-v2:latest
+      tty: true
+  nodeSelector:
+    provider: openstack
